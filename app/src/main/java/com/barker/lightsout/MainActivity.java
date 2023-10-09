@@ -28,14 +28,18 @@ public class MainActivity extends AppCompatActivity {
 
         LightView view = findViewById(R.id.lightView);
         FloatingActionButton button = findViewById(R.id.reset);
+        FloatingActionButton increase = findViewById(R.id.increase);
+        FloatingActionButton decrease = findViewById(R.id.decrease);
         LinearLayout layout = findViewById(R.id.layout);
 
         if (controller == null) {
-            controller = new MainController(new MainModel(), view, layout);
+            controller = new MainController(new MainModel(), view, layout, increase, decrease);
         }
 
         view.setOnTouchListener(controller);
         button.setOnClickListener(controller);
+        increase.setOnClickListener(controller);
+        decrease.setOnClickListener(controller);
 
         //for getting the size of the layout
         ViewTreeObserver vto = layout.getViewTreeObserver();

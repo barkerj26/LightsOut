@@ -15,7 +15,6 @@ public class LightView extends SurfaceView {
     private int h;
     private final Paint darkPaint;
     private final Paint lightPaint;
-    private final Paint backPaint;
     private final Paint winPaint;
     private final Paint nopePaint;
     private final Paint blackPaint;
@@ -41,10 +40,6 @@ public class LightView extends SurfaceView {
         lightPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         lightPaint.setColor(0xFFD0E0E0);
         lightPaint.setStyle(Paint.Style.FILL);
-
-        backPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-        backPaint.setColor(0xFF100505);
-        backPaint.setStyle(Paint.Style.FILL);
 
         winPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
         winPaint.setColor(0xFF008010);
@@ -116,7 +111,7 @@ public class LightView extends SurfaceView {
         }
 
         int sizeBase = (Math.min(w, h) * 7) / 8;
-        float SB5 = sizeBase / 5f;
+        float SB5 = sizeBase / (float) model.getSquares();
         float baseLeft = w / 2f - sizeBase / 2f;
         float baseTop = h / 2f - sizeBase / 2f;
         float baseRight = w / 2f + sizeBase / 2f;
@@ -126,11 +121,10 @@ public class LightView extends SurfaceView {
         float SB30 = sizeBase / 30f;
         canvas.drawRect(baseLeft + SB30, baseTop + SB30, baseRight + SB30,
                 baseBottom + SB30, blackPaint);
-        canvas.drawRect(baseLeft, baseTop, baseRight, baseBottom, backPaint);
 
         //draw each cube
-        for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < 5; j++) {
+        for (int i = 0; i < model.getSquares(); i++) {
+            for (int j = 0; j < model.getSquares(); j++) {
                 Paint paint;
                 if (model.getState(i, j)) {
                     paint = lightPaint;
@@ -138,8 +132,12 @@ public class LightView extends SurfaceView {
                     paint = darkPaint;
                 }
 
-                canvas.drawRect(baseLeft + SB5 * i, baseTop + SB5 * j,
-                        baseLeft + SB5 * (i + 1), baseTop + SB5 * (j + 1), paint);
+                canvas.drawRect(
+                        baseLeft + SB5 * i - 0.5f,
+                        baseTop + SB5 * j - 0.5f,
+                        baseLeft + SB5 * (i + 1) + 0.5f,
+                        baseTop + SB5 * (j + 1) + 0.5f,
+                        paint);
             }
         }
     }

@@ -6,15 +6,19 @@ import android.view.View;
 import android.view.ViewTreeObserver;
 import android.widget.LinearLayout;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 /**
  * MainController
  * Handles behavior for clicking on and resetting the board
  */
 public class MainController implements View.OnClickListener, View.OnTouchListener,
         ViewTreeObserver.OnGlobalLayoutListener {
-    MainModel model;
-    LightView lightView;
-    LinearLayout layout;
+    private final MainModel model;
+    private final LightView lightView;
+    private final LinearLayout layout;
+    private final FloatingActionButton increase;
+    private final FloatingActionButton decrease;
 
     /**
      * Constructor for the controller
@@ -22,16 +26,40 @@ public class MainController implements View.OnClickListener, View.OnTouchListene
      * @param model the model class
      * @param view the view class
      */
-    public MainController(MainModel model, LightView view, LinearLayout layout) {
+    public MainController(MainModel model, LightView view, LinearLayout layout,
+                          FloatingActionButton increase, FloatingActionButton decrease) {
         this.model = model;
         this.lightView = view;
         this.layout = layout;
+        this.increase = increase;
+        this.decrease = decrease;
         view.setModel(model);
     }
 
     @Override
     public void onClick(View view) {
-        model.randomizeStates();
+        int id = view.getId();
+        if (id == R.id.reset) {
+            model.randomizeStates();
+        } else if (id == R.id.increase) {
+            int newSquares = Math.min(model.getSquares() + 1, 10);
+
+            decrease.show();
+            if (newSquares == 10) {
+                increase.hide();
+            }
+
+            model.setSquares(newSquares);
+        } else if (id == R.id.decrease) {
+            int newSquares = Math.max(model.getSquares() - 1, 3);
+
+            increase.show();
+            if (newSquares == 3) {
+                decrease.hide();
+            }
+
+            model.setSquares(newSquares);
+        }
         lightView.invalidate();
     }
 
@@ -53,8 +81,8 @@ public class MainController implements View.OnClickListener, View.OnTouchListene
             return false;
         }
 
-        int row = (int) ((x - baseLeft) / (sizeBase / 5f));
-        int col = (int) ((y - baseTop) / (sizeBase / 5f));
+        int row = (int) ((x - baseLeft) / (sizeBase / (float) model.getSquares()));
+        int col = (int) ((y - baseTop) / (sizeBase / (float) model.getSquares()));
         model.pressState(row, col);
         model.checkSolved();
         lightView.invalidate();

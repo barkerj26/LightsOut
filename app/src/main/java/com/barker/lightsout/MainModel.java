@@ -7,18 +7,36 @@ import java.util.Random;
  * Stores and manipulates the game's data
  */
 public class MainModel {
-    private final boolean[][] states;
+    private boolean[][] states;
     private final Random random;
     private boolean solved;
+    private int squares;
 
     /**
      * Constructor for the model
      */
     public MainModel() {
-        states = new boolean[5][5];
         random = new Random();
-        solved = false;
+        setSquares(5);
+    }
 
+    /**
+     * getSquares
+     * gets the side count
+     * @return the squares value
+     */
+    public int getSquares() {
+        return squares;
+    }
+
+    /**
+     * setSquares
+     * sets the size of the board and resets its data
+     * @param squares the number of squares per side
+     */
+    public void setSquares(int squares) {
+        this.squares = squares;
+        states = new boolean[squares][squares];
         randomizeStates();
     }
 
@@ -28,14 +46,15 @@ public class MainModel {
      */
     public void randomizeStates() {
         boolean state = random.nextBoolean();
-        for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < 5; j++) {
+        for (int i = 0; i < squares; i++) {
+            for (int j = 0; j < squares; j++) {
                 states[i][j] = state;
             }
         }
-        
-        for (int i = 0; i < 10; i++) {
-            pressState(random.nextInt(4), random.nextInt(4));
+
+        int clicks = (int) Math.pow(squares, 2) / 2;
+        for (int i = 0; i < clicks; i++) {
+            pressState(random.nextInt(squares-1), random.nextInt(squares-1));
         }
 
         checkSolved();
@@ -68,7 +87,7 @@ public class MainModel {
      * @return the state at that position
      */
     public boolean getState(int row, int col) {
-        if (row < 0 || col < 0 || row > 4 || col > 4) {
+        if (row < 0 || col < 0 || row >= squares || col >= squares) {
             return false;
         }
 
@@ -103,7 +122,7 @@ public class MainModel {
      * @return whether the row and column were in bounds
      */
     private boolean pressStateInternal(int row, int col) {
-        if (row < 0 || col < 0 || row > 4 || col > 4) {
+        if (row < 0 || col < 0 || row >= squares || col >= squares) {
             return false;
         }
 
@@ -118,8 +137,8 @@ public class MainModel {
      * @return if the game is all dark/all light
      */
     private boolean checkStates() {
-        for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < 5; j++) {
+        for (int i = 0; i < squares; i++) {
+            for (int j = 0; j < squares; j++) {
                 if (!states[i][j]) {
                     return checkStatesInverse();
                 }
@@ -136,8 +155,8 @@ public class MainModel {
      * @return whether the lights are all off
      */
     private boolean checkStatesInverse() {
-        for (int i = 0; i < 5; i++) {
-            for (int j = 0; j < 5; j++) {
+        for (int i = 0; i < squares; i++) {
+            for (int j = 0; j < squares; j++) {
                 if (states[i][j]) {
                     return false;
                 }
