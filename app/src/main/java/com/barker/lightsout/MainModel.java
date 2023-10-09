@@ -18,6 +18,7 @@ public class MainModel {
         states = new boolean[5][5];
         random = new Random();
         solved = false;
+
         randomizeStates();
     }
 
@@ -26,11 +27,17 @@ public class MainModel {
      * Randomizes the state of each tile, effectively resetting the game
      */
     public void randomizeStates() {
+        boolean state = random.nextBoolean();
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
-                states[i][j] = random.nextBoolean();
+                states[i][j] = state;
             }
         }
+        
+        for (int i = 0; i < 10; i++) {
+            pressState(random.nextInt(4), random.nextInt(4));
+        }
+
         checkSolved();
     }
 

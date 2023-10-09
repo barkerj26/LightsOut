@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
+import android.view.ViewTreeObserver;
 import android.widget.LinearLayout;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -17,6 +18,8 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
  * CS 301
  */
 public class MainActivity extends AppCompatActivity {
+    MainController controller = null;
+
     @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,16 +28,17 @@ public class MainActivity extends AppCompatActivity {
 
         LightView view = findViewById(R.id.lightView);
         FloatingActionButton button = findViewById(R.id.reset);
-        MainController controller = new MainController(new MainModel(), view);
-        view.setOnTouchListener(controller);
-        button.setOnClickListener(controller);
-    }
-
-    @Override
-    public void onWindowFocusChanged(boolean hasFocus) {
-        LightView view = findViewById(R.id.lightView);
         LinearLayout layout = findViewById(R.id.layout);
 
-        view.setSize(layout.getWidth(), layout.getHeight());
+        if (controller == null) {
+            controller = new MainController(new MainModel(), view, layout);
+        }
+
+        view.setOnTouchListener(controller);
+        button.setOnClickListener(controller);
+
+        //for getting the size of the layout
+        ViewTreeObserver vto = layout.getViewTreeObserver();
+        vto.addOnGlobalLayoutListener(controller);
     }
 }

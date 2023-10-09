@@ -3,14 +3,18 @@ package com.barker.lightsout;
 import android.annotation.SuppressLint;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewTreeObserver;
+import android.widget.LinearLayout;
 
 /**
  * MainController
  * Handles behavior for clicking on and resetting the board
  */
-public class MainController implements View.OnClickListener, View.OnTouchListener {
+public class MainController implements View.OnClickListener, View.OnTouchListener,
+        ViewTreeObserver.OnGlobalLayoutListener {
     MainModel model;
     LightView lightView;
+    LinearLayout layout;
 
     /**
      * Constructor for the controller
@@ -18,9 +22,10 @@ public class MainController implements View.OnClickListener, View.OnTouchListene
      * @param model the model class
      * @param view the view class
      */
-    public MainController(MainModel model, LightView view) {
+    public MainController(MainModel model, LightView view, LinearLayout layout) {
         this.model = model;
         this.lightView = view;
+        this.layout = layout;
         view.setModel(model);
     }
 
@@ -55,5 +60,10 @@ public class MainController implements View.OnClickListener, View.OnTouchListene
         lightView.invalidate();
 
         return false;
+    }
+
+    @Override
+    public void onGlobalLayout() {
+        lightView.setSize(layout.getMeasuredWidth(), layout.getMeasuredHeight());
     }
 }
