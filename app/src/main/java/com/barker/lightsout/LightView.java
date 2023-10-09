@@ -6,6 +6,10 @@ import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.view.SurfaceView;
 
+/**
+ * LightView
+ * display for the 5x5 game
+ */
 public class LightView extends SurfaceView {
     private int w;
     private int h;
@@ -19,6 +23,7 @@ public class LightView extends SurfaceView {
 
     /**
      * Constructor for the view
+     *
      * @param context context of the view
      * @param attrs attributes for the view
      */
@@ -57,6 +62,7 @@ public class LightView extends SurfaceView {
     /**
      * setSize
      * sets the size of the view for its calculations
+     *
      * @param w width
      * @param h height
      */
@@ -78,6 +84,7 @@ public class LightView extends SurfaceView {
     /**
      * getTall
      * get the height (h) value
+     *
      * @return the height
      */
     public int getTall() {
@@ -87,6 +94,7 @@ public class LightView extends SurfaceView {
     /**
      * setModel
      * sets the model class for the view to use
+     *
      * @param model the model class
      */
     public void setModel(MainModel model) {
@@ -114,7 +122,7 @@ public class LightView extends SurfaceView {
         float baseRight = w / 2f + sizeBase / 2f;
         float baseBottom = h / 2f + sizeBase / 2f;
 
-        //shadow and backfill
+        //shadow and back fill
         float SB30 = sizeBase / 30f;
         canvas.drawRect(baseLeft + SB30, baseTop + SB30, baseRight + SB30,
                 baseBottom + SB30, blackPaint);

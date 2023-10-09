@@ -37,6 +37,7 @@ public class MainModel {
     /**
      * pressState
      * Manipulates the states for a click action
+     *
      * @param row row to click on
      * @param col column to click on
      */
@@ -53,8 +54,10 @@ public class MainModel {
     /**
      * getState
      * returns the state at a position
+     *
      * @param row the row to check
      * @param col the column to check
+     *
      * @return the state at that position
      */
     public boolean getState(int row, int col) {
@@ -68,6 +71,7 @@ public class MainModel {
     /**
      * getSolved
      * gets whether the board is solved
+     *
      * @return true if the board is solved and false otherwise
      */
     public boolean getSolved() {
@@ -85,8 +89,10 @@ public class MainModel {
     /** PRIVATE
      * pressStateInternal
      * The internal, repeated code for pressState
+     *
      * @param row row to affect
      * @param col column to affect
+     *
      * @return whether the row and column were in bounds
      */
     private boolean pressStateInternal(int row, int col) {
@@ -101,6 +107,7 @@ public class MainModel {
     /** PRIVATE
      * checkStates
      * Checks if the game is all dark or all light
+     *
      * @return if the game is all dark/all light
      */
     private boolean checkStates() {
@@ -118,6 +125,7 @@ public class MainModel {
     /** PRIVATE
      * checkStatesInverse
      * the 'second half' of checkStates
+     *
      * @return whether the lights are all off
      */
     private boolean checkStatesInverse() {

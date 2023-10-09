@@ -8,8 +8,15 @@ import android.widget.LinearLayout;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+/**
+ * Lights out
+ * 5x5 button game
+ *
+ * @author Jaden Barker
+ * 8 October 2023
+ * CS 301
+ */
 public class MainActivity extends AppCompatActivity {
-
     @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {

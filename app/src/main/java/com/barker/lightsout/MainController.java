@@ -4,12 +4,17 @@ import android.annotation.SuppressLint;
 import android.view.MotionEvent;
 import android.view.View;
 
+/**
+ * MainController
+ * Handles behavior for clicking on and resetting the board
+ */
 public class MainController implements View.OnClickListener, View.OnTouchListener {
     MainModel model;
     LightView lightView;
 
     /**
      * Constructor for the controller
+     *
      * @param model the model class
      * @param view the view class
      */
