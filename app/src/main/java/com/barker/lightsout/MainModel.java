@@ -54,7 +54,7 @@ public class MainModel {
 
         int clicks = (int) Math.pow(squares, 2) / 2;
         for (int i = 0; i < clicks; i++) {
-            pressState(random.nextInt(squares-1), random.nextInt(squares-1));
+            pressState(random.nextInt(squares), random.nextInt(squares));
         }
 
         checkSolved();
